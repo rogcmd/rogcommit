@@ -8,4 +8,4 @@ TODO:
 - [ ] verificar se adicionou algum arquivo pra commit
 - [ ] opção para editar commit
 - [x] verificar se tem alguma mensagem de descrição vazia
-- [x] mostrar ultimos 3 commitsmmit
+- [x] mostrar ultimos 3 commits
