@@ -1,32 +1,45 @@
 #!/usr/bin/env bash
-echo "" 
 
-gum style \
---background "#cba6f7" \
---foreground "#1e1e2e" \
---padding "0 1" \
---bold \
-"commit"\
-
-echo ""
-if [ ! -d ".git" ]; then
+gum=$(which gum)
+if [ -z "$gum" ]; then
+  echo ""
+  echo -e "\e[31mThis program require Gum to load!\e[0m"
+  echo -e "Check how to install Gum at: \e[34mhttps://github.com/charmbracelet/gum?tab=readme-ov-file#installation\e[0m"
+  else
+  
+  gum style \
+  --background "#cba6f7" \
+  --foreground "#1e1e2e" \
+  --padding "0 1" \
+  --margin "1 0" \
+  --bold \
+  "commit"\
+  
+  if [ ! -d ".git" ]; then
     if gum confirm "not a git repository, git init?"; then 
-    git init && git branch -M "master" && git add . && echo ""
-      
-    else
-    gum style \
-    --foreground "#f38ba8" \
-    "You must be on a git repo"
+      git init && git branch -M "master" && git add . && echo ""
+        
+      else
+      gum style \
+      --foreground "#f38ba8" \
+      "You must be on a git repo"
     fi 
-fi
-
-if [ -d ".git" ]; then
-    TYPE=$(gum choose "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
-    SCOPE=$(gum input --header "scope: " --placeholder "scope of the commit")
-    TITLE=$(gum write --header "$TYPE($SCOPE):" --placeholder "title of the commit")
-    DESCRIPTION=$(gum write --header "Description" --placeholder "description of the commit")
+  fi
+  
+  if [ -d ".git" ]; then
+    TYPE=$(gum choose --header "Select the type" "fix" "feat" "docs" "style" "refactor" "test" "chore" "revert")
+    SCOPE=$(gum input --header "Scope of the commit: " --placeholder "scope of the commit")
+    test -n "$SCOPE" && SCOPE="($SCOPE)"
+    TITLE=$(gum write --header "Title of the commit:" --placeholder "changes you made")
     
-    COMMIT="$TYPE($SCOPE): $TITLE"
+    while [ -z $TITLE ]; do
+      echo -e "\e[31mTitle cant be blank!\e[0m"
+      TITLE=$(gum write --header "Title of the commit:" --placeholder "changes you made")
+    done
+    
+    DESCRIPTION=$(gum write --header "Description" --placeholder "description of the commit")
+    COMMIT="$TYPE$SCOPE: $TITLE"
+    
     clear
     
     gum style \
@@ -34,42 +47,45 @@ if [ -d ".git" ]; then
     
     if [ -n "$DESCRIPTION" ]; then
       FINAL_TEXT="$COMMIT
-      
+
 $DESCRIPTION"
+
       else
-        FINAL_TEXT="$COMMIT"
+      FINAL_TEXT="$COMMIT"
     fi
     
     gum style \
-    --foreground "#cba6f7" \
-    --border rounded \
-    --padding "1 1" \
-    --border-foreground "#89b4fa" \
     --italic \
+    --border rounded \
+    --foreground "#cba6f7" \
+    --border-foreground "#89b4fa" \
+    --padding "1 2" \
+    --margin "1 0" \
     "$FINAL_TEXT"
-    
-    echo ""
     
     # opcao para editar commit
     
     if gum confirm "commit changes?";then
       gum style \
       --foreground "#94e2d5" \
+      --margin "1 0" \
       "operation succed"\
       && git commit -m "$FINAL_TEXT"
       echo ""
       
-      if gum confirm "push to a branch?"; then
-        git push
-        echo ""
+      if gum confirm "push changes?"; then
+      git push
+      echo ""
       fi
       
       if gum confirm "show last 3 logs?"; then
-        git log -3 --oneline
+      git log -3 --oneline
       fi
       else
-        gum style \
-        --foreground "#f38ba8" \
-        "cancelled operation"
+      clear
+      gum style \
+      --foreground "#f38ba8" \
+      "cancelled operation"
     fi
+  fi
 fi

@@ -26,8 +26,7 @@ chmod +x commit.sh
 create an alias to execute the file anyware
 ```sh title:config.fish
 # Fish example
-alias commit = "sh path/to/file/commit.sh"
-
+alias commit = "bash path/to/file/commit.sh"
 ```
 
 ## Styling
@@ -35,7 +34,7 @@ u can customize the colors  to your
 liking changing the eviroment variables! 
 
 ```sh title:config.fish
-# GUM - Catppuccin Machiato
+# example - Catppuccin Machiato
 set -gx GUM_INPUT_PROMPT "❯ "
 set -gx GUM_INPUT_HEADER_FOREGROUND "#94e2d5" # teal
 set -gx GUM_INPUT_PROMPT_FOREGROUND "#89b4fa" # blue
