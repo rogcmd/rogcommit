@@ -32,7 +32,7 @@ if [ -z "$gum" ]; then
     test -n "$SCOPE" && SCOPE="($SCOPE)"
     TITLE=$(gum write --header "Title of the commit:" --placeholder "changes you made")
     
-    while [ -z $TITLE ]; do
+    while [ -z "$TITLE" ]; do
       echo -e "\e[31mTitle cant be blank!\e[0m"
       TITLE=$(gum write --header "Title of the commit:" --placeholder "changes you made")
     done
