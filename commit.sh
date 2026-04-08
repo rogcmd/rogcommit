@@ -71,21 +71,6 @@ $DESCRIPTION"
       --margin "1 0" \
       "operation succed"\
       && git commit -m "$FINAL_TEXT"
-      echo ""
-      
-      if gum confirm "push changes?"; then
-      git push
-      echo ""
-      fi
-      
-      if gum confirm "show last 3 logs?"; then
-      git log -3 --oneline
-      fi
-      else
-      clear
-      gum style \
-      --foreground "#f38ba8" \
-      "cancelled operation"
     fi
   fi
 fi
