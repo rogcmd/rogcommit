@@ -58,7 +58,3 @@ TODO:
 - [ ] opção para editar commit
 - [x] verificar se tem alguma mensagem de descrição vazia
 - [x] mostrar ultimos 3 commits
-<<<<<<< HEAD
-- [ ] verificar se o titulo ta em branco
-=======
->>>>>>> 4c6540e8d1e2853701a99957ab716f95bc331d5a
