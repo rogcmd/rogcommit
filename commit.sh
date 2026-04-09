@@ -66,7 +66,6 @@ $DESCRIPTION"
     gum style \
     --italic \
     --border rounded \
-    --foreground "#cba6f7" \
     --border-foreground "#89b4fa" \
     --padding "1 2" \
     --margin "1 0" \
