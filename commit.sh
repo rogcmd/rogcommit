@@ -4,7 +4,7 @@ gum=$(which gum)
 if [ -z "$gum" ]; then
   echo ""
   echo -e "\e[31mThis program require Gum to load!\e[0m"
-  echo -e "Check how to install Gum at: \e[34mhttps://github.com/charmbracelet/gum?tab=readme-ov-file#installation\e[0m"
+  echo -e "Check how to install Gum at: \e[4;34mhttps://github.com/charmbracelet/gum?tab=readme-ov-file#installation\e[0m"
   else
   
   gum style \
@@ -16,13 +16,25 @@ if [ -z "$gum" ]; then
   "commit"\
   
   if [ ! -d ".git" ]; then
-    if gum confirm "not a git repository, git init?"; then 
-      git init && git branch -M "master" && git add . && echo ""
-        
+    if gum confirm "Not a git repository, git init?"; then 
+      git init && git branch -M main && git add . && echo "" && git commit -m "first commit"
+        echo ""
+        if gum confirm "Add a remote?"; then
+          Remote=$(gum input --header "Add a remote URL")
+          
+          while [ -z $Remote ]; do
+            echo -e "\e[31mRemote URL cant be blank!\e[0m"
+            Remote=$(gum input --header "Add a remote Url")
+          done
+          
+          git remote add origin "$Remote"
+          git push -u origin main
+          
+          exit 0
+          else exit 0
+        fi
       else
-      gum style \
-      --foreground "#f38ba8" \
-      "You must be on a git repo"
+      echo -e "\e[31mYou must be on a git repo!\e[0m"
     fi 
   fi
   
@@ -40,10 +52,7 @@ if [ -z "$gum" ]; then
     DESCRIPTION=$(gum write --header "Description" --placeholder "description of the commit")
     COMMIT="$TYPE$SCOPE: $TITLE"
     
-    clear
-    
-    gum style \
-    "Final commit:"\
+    echo "Final commit:"
     
     if [ -n "$DESCRIPTION" ]; then
       FINAL_TEXT="$COMMIT
@@ -66,11 +75,10 @@ $DESCRIPTION"
     # opcao para editar commit
     
     if gum confirm "commit changes?";then
-      gum style \
-      --foreground "#94e2d5" \
-      --margin "1 0" \
-      "operation succed"\
-      && git commit -m "$FINAL_TEXT"
+      echo -e "\e[32mOperation succed!\e[0m"
+      git commit -m "$FINAL_TEXT"
+      else
+      echo -e "\e[31mOperation canceled!\e[0m"
     fi
   fi
 fi

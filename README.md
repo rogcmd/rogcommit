@@ -51,10 +51,3 @@ set -gx GUM_WRITE_PLACEHOLDER_FOREGROUND "#6c7086" # overlay0
 set -gx GUM_CONFIRM_PROMPT_FOREGROUND "#cdd6f4" # text
 set -gx GUM_CONFIRM_SELECTED_BACKGROUND "#313244" # surface0
 ```
-
-TODO: 
-- [x] verificar se o git ta ativo
-- [ ] verificar se adicionou algum arquivo pra commit
-- [ ] opção para editar commit
-- [x] verificar se tem alguma mensagem de descrição vazia
-- [x] mostrar ultimos 3 commits
