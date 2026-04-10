@@ -17,7 +17,7 @@ if [ -z "$gum" ]; then
   
   if [ ! -d ".git" ]; then
     if gum confirm "Not a git repository, git init?"; then 
-      git init && git branch -M main && git add . && echo "" && git commit -m "first commit"
+      git init && git add . && echo "" && git commit -m "first commit"
         echo ""
         if gum confirm "Add a remote?"; then
           Remote=$(gum input --header "Add a remote URL")
